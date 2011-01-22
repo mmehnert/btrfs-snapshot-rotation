@@ -15,8 +15,9 @@ cat <<EOF
 $scriptname: Take and rotate snapshots on a btrfs file system
 
   Usage:
-  $scriptname target snap_name count [-q]
+  $scriptname source target snap_name count [-q]
  
+  source:    path to make snaphost of
   target:    snapshot directory
   snap_name: Base name for snapshots, to be appended to 
              date "+%F--%H-%M-%S"

@@ -1,0 +1,23 @@
+btrfs-snapshot: Take and rotate snapshots on a btrfs file system
+
+  Usage:
+  btrfs-snapshot source target snap_name count [-q]
+ 
+  source:    path to make snaphost of
+  target:    snapshot directory
+  snap_name: Base name for snapshots, to be appended to 
+             date "+%F--%H-%M-%S"
+  count:     Number of snapshots in the timestamp-@snap_name format to
+             keep at one time for a given snap_name. 
+  [-q]:      Be quiet.
+
+Example for crontab:
+15,30,45  * * * *   root    /usr/local/bin/btrfs-snapshot / /.btrfs quarterly 4 -q
+0         * * * *   root    /usr/local/bin/btrfs-snapshot / /.btrfs hourly 8 -q
+
+Example for anacrontab:
+1             10      daily_snap      /usr/local/bin/btrfs-snapshot / /.btrfs daily 8
+7             30      weekly_snap     /usr/local/bin/btrfs-snapshot / /.btrfs weekly 5
+@monthly      90      monthly_snap    /usr/local/bin/btrfs-snapshot / /.btrfs monthly 3
+
+
