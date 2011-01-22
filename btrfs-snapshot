@@ -45,7 +45,7 @@ if [ -z $COUNT ] ; then
     usage
 fi
 
-if [ ! -z $5 ] ; then
+if [ ! -z $6 ] ; then
     echo "Too many options."
     usage
 fi
