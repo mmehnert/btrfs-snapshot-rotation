@@ -21,3 +21,9 @@ Example for anacrontab:
 @monthly      90      monthly_snap    /usr/local/bin/btrfs-snapshot / /.btrfs monthly 3
 
 
+FAQ:
+
+1. I get an error like "btrfs subvolume snapshot SOURCE DESTINATION: line 77: btrfs: command not found"
+Please make sure the btrfs command is in your PATH (e.g. in Debian it is not in cron's default PATH)
+
+
