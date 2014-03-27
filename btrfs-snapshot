@@ -60,7 +60,7 @@ fi
 max_snap=$(($COUNT -1))
 
 # Clean up older snapshots:
-for i in `ls $TARGET|sort |grep @${SNAP}|head -n -${max_snap}`; do
+for i in `ls $TARGET|sort |grep @${SNAP}\$|head -n -${max_snap}`; do
     cmd="btrfs subvolume delete   $TARGET/$i"
     if [ -z $QUIET ]; then
         echo $cmd
