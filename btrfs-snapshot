@@ -41,18 +41,18 @@ EOF
 
 # Basic argument checks:
 if [ -z $COUNT ] ; then
-    echo "COUNT is not provided."
-    usage
+	echo "COUNT is not provided."
+	usage
 fi
 
 if [ ! -z $6 ] ; then
-    echo "Too many options."
-    usage
+	echo "Too many options."
+	usage
 fi
 
-if [ -n "$QUIET" ] && [ "x$QUIET" != "x-q"  ] ; then
-    echo "Option 4 is either -q or empty. Given: \"$QUIET\""
-    usage
+if [ -n "$QUIET" ] && [ "x$QUIET" != "x-q"	] ; then
+	echo "Option 4 is either -q or empty. Given: \"$QUIET\""
+	usage
 fi
 
 
@@ -61,17 +61,17 @@ max_snap=$(($COUNT -1))
 
 # Clean up older snapshots:
 for i in `ls $TARGET|sort |grep @${SNAP}\$|head -n -${max_snap}`; do
-    cmd="btrfs subvolume delete   $TARGET/$i"
-    if [ -z $QUIET ]; then
-        echo $cmd
-    fi
-    $cmd >/dev/null
+	cmd="btrfs subvolume delete $TARGET/$i"
+	if [ -z $QUIET ]; then
+		echo $cmd
+	fi
+	$cmd >/dev/null
 done
 
 
 # Create new snapshot:
 cmd="btrfs subvolume snapshot $SOURCE $TARGET/`date "+%F--%H-%M-%S-@${SNAP}"`"
 if [ -z $QUIET ]; then
-    echo $cmd
+	echo $cmd
 fi
 $cmd >/dev/null
