@@ -70,7 +70,7 @@ done
 
 
 # Create new snapshot:
-cmd="btrfs subvolume snapshot $SOURCE $TARGET/`date "+%F--%H-%M-%S-@${SNAP}"`"
+cmd="btrfs subvolume snapshot -r $SOURCE $TARGET/`date "+%F--%H-%M-%S-@${SNAP}"`"
 if [ -z $QUIET ]; then
 	echo $cmd
 fi
