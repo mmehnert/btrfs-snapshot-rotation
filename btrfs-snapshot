@@ -10,7 +10,7 @@ QUIET=$5
 
 # Function to display usage:
 usage() {
-    scriptname=`/usr/bin/basename $0`
+    scriptname=$(/usr/bin/basename "$0")
 cat <<EOF
 $scriptname: Take and rotate snapshots on a btrfs file system
 
@@ -40,12 +40,12 @@ EOF
 }
 
 # Basic argument checks:
-if [ -z $COUNT ] ; then
+if [ -z "$COUNT" ] ; then
 	echo "COUNT is not provided."
 	usage
 fi
 
-if [ ! -z $6 ] ; then
+if [ ! -z "$6" ] ; then
 	echo "Too many options."
 	usage
 fi
@@ -57,21 +57,21 @@ fi
 
 
 # $max_snap is the highest number of snapshots that will be kept for $SNAP.
-max_snap=$(($COUNT -1))
+max_snap=$((COUNT -1))
 
 # Clean up older snapshots:
-for i in `ls $TARGET|sort |grep @${SNAP}\$|head -n -${max_snap}`; do
-	cmd="btrfs subvolume delete $TARGET/$i"
-	if [ -z $QUIET ]; then
-		echo $cmd
+for i in $(find "$TARGET"|sort |grep @"${SNAP}"\$|head -n -${max_snap}); do
+	cmd="btrfs subvolume delete $i"
+	if [ -z "$QUIET" ]; then
+		echo "$cmd"
 	fi
 	$cmd >/dev/null
 done
 
 
 # Create new snapshot:
-cmd="btrfs subvolume snapshot -r $SOURCE $TARGET/`date "+%F--%H-%M-%S-@${SNAP}"`"
-if [ -z $QUIET ]; then
-	echo $cmd
+cmd="btrfs subvolume snapshot -r $SOURCE $TARGET/$(date "+%F--%H-%M-%S-@${SNAP}")"
+if [ -z "$QUIET" ]; then
+	echo "$cmd"
 fi
 $cmd >/dev/null
