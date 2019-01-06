@@ -57,7 +57,14 @@ fi
 
 
 # $max_snap is the highest number of snapshots that will be kept for $SNAP.
-max_snap=$((COUNT -1))
+max_snap=$COUNT
+
+# Create new snapshot:
+cmd="btrfs subvolume snapshot -r $SOURCE $TARGET/$(date "+%F--%H-%M-%S-@${SNAP}")"
+if [ -z "$QUIET" ]; then
+	echo "$cmd"
+fi
+$cmd >/dev/null
 
 # Clean up older snapshots:
 for i in $(find "$TARGET" -maxdepth 1|sort |grep @"${SNAP}"\$|head -n -${max_snap}); do
@@ -67,11 +74,3 @@ for i in $(find "$TARGET" -maxdepth 1|sort |grep @"${SNAP}"\$|head -n -${max_sna
 	fi
 	$cmd >/dev/null
 done
-
-
-# Create new snapshot:
-cmd="btrfs subvolume snapshot -r $SOURCE $TARGET/$(date "+%F--%H-%M-%S-@${SNAP}")"
-if [ -z "$QUIET" ]; then
-	echo "$cmd"
-fi
-$cmd >/dev/null
