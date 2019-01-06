@@ -60,7 +60,7 @@ fi
 max_snap=$((COUNT -1))
 
 # Clean up older snapshots:
-for i in $(find "$TARGET"|sort |grep @"${SNAP}"\$|head -n -${max_snap}); do
+for i in $(find "$TARGET" -maxdepth 1|sort |grep @"${SNAP}"\$|head -n -${max_snap}); do
 	cmd="btrfs subvolume delete $i"
 	if [ -z "$QUIET" ]; then
 		echo "$cmd"
